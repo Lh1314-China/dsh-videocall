@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>dsh-videocall · 控制面板</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.6 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; background: #0f1115; color: #e8eaed; }
+  header { padding: 14px 18px; border-bottom: 1px solid #23262d; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  header h1 { font-size: 15px; margin: 0; font-weight: 600; }
+  .pill { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid #31353e; color: #9aa0a6; }
+  .pill.on { border-color: #2f6b4f; color: #6ee7b7; background: #12251c; }
+  .pill.off { border-color: #5a2530; color: #fca5a5; background: #251216; }
+  main { padding: 18px; display: grid; gap: 16px; max-width: 860px; margin: 0 auto; }
+  .card { background: #161920; border: 1px solid #23262d; border-radius: 12px; padding: 14px; }
+  .card h2 { font-size: 13px; margin: 0 0 10px; color: #9aa0a6; font-weight: 600; letter-spacing: .04em; }
+  table.kv { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.kv td { padding: 4px 0; vertical-align: top; }
+  table.kv td:first-child { color: #9aa0a6; width: 110px; }
+  .mono { font-family: ui-monospace, Consolas, monospace; font-size: 12px; word-break: break-all; }
+  button { border: 1px solid #31353e; background: #1d222b; color: #e8eaed; padding: 9px 14px; border-radius: 9px; font: inherit; cursor: pointer; }
+  button:hover { background: #252b36; }
+  button.primary { background: #2f6b4f; border-color: #3c8a66; }
+  button.danger { background: #5a2530; border-color: #7a3242; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  label { display: block; font-size: 12px; color: #9aa0a6; margin: 10px 0 4px; }
+  input { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #31353e; background: #11141a; color: inherit; font: inherit; }
+  .msg { margin-top: 10px; font-size: 12px; color: #9aa0a6; min-height: 18px; }
+  .msg.err { color: #fca5a5; }
+  .msg.ok { color: #6ee7b7; }
+  .hint { font-size: 12px; color: #6b7280; margin-top: 6px; }
+  .warn { background: #2a2312; border: 1px solid #4a3d16; color: #f7d67a; padding: 10px 12px; border-radius: 9px; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>dsh-videocall · 控制面板</h1>
+  <span id="pillService" class="pill">服务 —</span>
+  <span id="pillTunnel" class="pill">隧道 —</span>
+  <span id="pillRooms" class="pill">房间 —</span>
+</header>
+
+<main>
+  <section class="card">
+    <h2>当前状态</h2>
+    <table class="kv" id="statusTable">
+      <tr><td>加载中</td><td>…</td></tr>
+    </table>
+    <div class="hint">页面每 5 秒自动刷新一次状态。</div>
+  </section>
+
+  <section class="card">
+    <h2>一键就位</h2>
+    <div class="row">
+      <button id="btnActivate" class="primary">激活（起公网隧道）</button>
+      <button id="btnDeactivate" class="danger">停用（切断隧道）</button>
+      <button id="btnRefresh">刷新状态</button>
+    </div>
+    <div class="msg" id="actionMsg"></div>
+    <div class="hint">
+      「激活」= 打开公网隧道，让对方从任意网络打开链接；「停用」立刻切断，本机通话不受影响。
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>路径设置</h2>
+    <div class="warn">
+      这些是「本机程序的路径」。改完点保存会写进 <span class="mono">panel.json</span>，<b>需要重载插件才生效</b>。
+    </div>
+    <form id="pathsForm">
+      <label for="p_tunnelBin">cloudflared 可执行文件</label>
+      <input id="p_tunnelBin" placeholder="留空 = 插件目录 bin/cloudflared.exe" />
+
+      <label for="p_tlsPfx">HTTPS 证书（PFX）</label>
+      <input id="p_tlsPfx" placeholder="留空 = 插件目录 certs/dev.pfx" />
+
+      <label for="p_tlsPass">证书口令</label>
+      <input id="p_tlsPass" placeholder="dsh-videocall" />
+
+      <label for="p_avatarMatch">皮套摄像头匹配关键字</label>
+      <input id="p_avatarMatch" placeholder="obs" />
+
+      <label for="p_obsPath">OBS 可执行文件（仅记录，供参考）</label>
+      <input id="p_obsPath" placeholder="D:\OBS\bin\64bit\obs64.exe" />
+
+      <label for="p_vtsPath">VTube Studio 可执行文件（仅记录，供参考）</label>
+      <input id="p_vtsPath" placeholder="…\VTube Studio.exe" />
+
+      <div class="row" style="margin-top:14px">
+        <button type="submit" class="primary">保存路径</button>
+      </div>
+      <div class="msg" id="pathsMsg"></div>
+    </form>
+  </section>
+</main>
+
+<script type="module" src="/panel.js"></script>
+</body>
+</html>

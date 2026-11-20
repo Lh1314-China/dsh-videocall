@@ -1,0 +1,81 @@
+{
+  "name": "dsh-videocall",
+  "version": "0.2.0",
+  "description": "Browser-to-browser WebRTC video call for DeepSeek Harness: your VTuber avatar on one side, your camera on the other, plus a low-bitrate glance channel back to the model. 给 DSH 一条零驱动、零端口的局域网视频通话通道。",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "server/*.js",
+    "static/*",
+    "tools/*.ps1",
+    "tools/*.bat",
+    "locale/*.json",
+    "docs/*.md",
+    "icon.svg",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": []
+    },
+    "compatibility": {
+      "dsh": ">=0.2.1-rc.2 <0.4.0",
+      "node": ">=20.3.0",
+      "profiles": [
+        "desktop",
+        "web"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "scripts": {
+    "check": "node --check index.js && node --check server/index.js && node --check server/signaling.js && node --check static/call.js && node --check p0/serve.mjs",
+    "probe": "node p0/serve.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "cordis-plugin",
+    "webrtc",
+    "video-call",
+    "vtuber",
+    "vtube-studio",
+    "obs",
+    "virtual-camera",
+    "ai-companion"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lh1314-China/dsh-videocall.git"
+  },
+  "homepage": "https://github.com/Lh1314-China/dsh-videocall#readme",
+  "bugs": {
+    "url": "https://github.com/Lh1314-China/dsh-videocall/issues"
+  },
+  "author": {
+    "name": "Lh1314-China",
+    "url": "https://github.com/Lh1314-China"
+  },
+  "license": "MIT"
+}

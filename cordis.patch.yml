@@ -1,0 +1,45 @@
+# dsh-videocall —— 挂进 profile 的默认配置
+# 改完保存，DSH 会热重载；没有 HMR 的 profile 需要重启。
+- insert:
+    - id: dsh-videocall
+      name: dsh-videocall
+      config:
+        enabled: true
+
+        # 只绑回环。要上手机就配隧道，别改成 0.0.0.0
+        host: 127.0.0.1
+        port: 8790
+
+        # 走隧道时填，例如 https://xxx.trycloudflare.com
+        publicBaseUrl: ''
+
+        # ── 皮套（助手出镜的那一路）──
+        # OBS 虚拟摄像头的设备名关键字（不区分大小写）
+        avatarMatch: obs
+        avatarWidth: 1280
+        avatarHeight: 720
+        avatarFps: 30
+        avatarMirror: false
+
+        # ── 看（低档看轮廓 / 高档按需）──
+        lowWidth: 160
+        lowFps: 1
+        jpegQuality: 55
+        highWidth: 1280
+
+        # ── 安全 ──
+        tokenTtlSec: 3600
+        # 开：令牌首个使用者定来源 IP，后来者必须同源
+        oneShotToken: false
+        # 额外允许的 Origin；同源和回环自动放行
+        allowedOrigins: []
+        # 每 IP 每分钟 join 次数上限，0 = 关
+        rateLimitPerMin: 30
+
+        # ── 连接 ──
+        iceServers:
+          - stun:stun.l.google.com:19302
+        # 对称 NAT 连不上时填 TURN
+        turnUrl: ''
+        turnUser: ''
+        turnCredential: ''

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Video Call",
+    "description": "Give DeepSeek Harness a real browser-to-browser video call: the assistant appears as a VTuber avatar (VTube Studio to OBS virtual camera) and can look at your camera in two tiers — a cheap silhouette stream, or a high-resolution frame on demand. Zero drivers, zero exposed ports: the plugin runs its own loopback-only service."
+  }
+}

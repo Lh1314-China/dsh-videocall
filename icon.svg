@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="dsh-videocall">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#11151c"/>
+      <stop offset="1" stop-color="#0b0d12"/>
+    </linearGradient>
+    <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6ee7b7"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <rect x="0.75" y="0.75" width="126.5" height="126.5" rx="27.25" fill="none" stroke="#1f2937" stroke-width="1.5"/>
+  <rect x="18" y="38" width="62" height="44" rx="11" fill="none" stroke="url(#fg)" stroke-width="5"/>
+  <path d="M84 52l22-12v40l-22-12z" fill="url(#fg)" opacity="0.92"/>
+  <circle cx="42" cy="60" r="7.5" fill="url(#fg)"/>
+  <path d="M30 78c4-7 10-10 12-10s8 3 12 10" fill="none" stroke="url(#fg)" stroke-width="4" stroke-linecap="round"/>
+  <g opacity="0.55" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M22 104c6 0 6-6 12-6s6 6 12 6 6-6 12-6 6 6 12 6 6-6 12-6"/>
+  </g>
+</svg>
