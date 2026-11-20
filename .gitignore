@@ -14,3 +14,4 @@ coverage/
 bin/
 certs/
 p0/
+*.tgz
